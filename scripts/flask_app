@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jul 17 01:52:33 2018
+
+@author: abhithegreat
+"""
+
+from flask import Flask, jsonify, request
+import pandas as pd 
+import numpy as np 
+import pickle as pkl 
+
+
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
+
+@app.route("/predict", methods = ['POST', 'GET'])
+def predict():
+    json_ = request.json
+    x = np.array(json_)
+    x = x.reshape(1, -1)
+    preds = model.predict_proba(x)[:,1]
+    return jsonify(list(preds))
+    
+    
+if __name__ == '__main__':   
+    model = pkl.load(open("models/rf_model.pkl", "rb"))
+    app.run(port= 8080)
+    
+    

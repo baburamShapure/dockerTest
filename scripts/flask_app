@@ -11,16 +11,15 @@ import pandas as pd
 import numpy as np 
 import pickle as pkl 
 
-
-
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
     return "Hello World!"
 
-@app.route("/predict", methods = ['POST', 'GET'])
+@app.route("/test_app/predict", methods = ['POST', 'GET'])
 def predict():
+    # request is a global variable in a flask app
     json_ = request.json
     x = np.array(json_)
     x = x.reshape(1, -1)
